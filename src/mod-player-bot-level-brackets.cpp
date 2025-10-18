@@ -144,18 +144,32 @@ static void LoadBotLevelBracketsConfig()
     for (uint8 i = 0; i < g_NumRanges; ++i)
     {
         std::string idx = std::to_string(i + 1);
-        g_AllianceLevelRanges[i].lower = static_cast<uint8>(sConfigMgr->GetOption<uint32>("BotLevelBrackets.Alliance.Range" + idx + ".Lower", (i == 0 ? 1 : i * 10)));
-        g_AllianceLevelRanges[i].upper = static_cast<uint8>(sConfigMgr->GetOption<uint32>("BotLevelBrackets.Alliance.Range" + idx + ".Upper", (i < g_NumRanges - 1 ? i * 10 + 9 : g_RandomBotMaxLevel)));
-        g_AllianceLevelRanges[i].desiredPercent = static_cast<uint8>(sConfigMgr->GetOption<uint32>("BotLevelBrackets.Alliance.Range" + idx + ".Pct", 11));
+        std::string keyPrefix = "BotLevelBrackets.Alliance.Range" + std::to_string(i + 1);
+        g_AllianceLevelRanges[i].lower = static_cast<uint8>(
+            sConfigMgr->GetOption<uint32>((keyPrefix + ".Lower").c_str(), (i == 0 ? 1 : i * 10))
+        );
+        g_AllianceLevelRanges[i].upper = static_cast<uint8>(
+            sConfigMgr->GetOption<uint32>((keyPrefix + ".Upper").c_str(), (i < g_NumRanges - 1 ? i * 10 + 9 : g_RandomBotMaxLevel))
+        );
+        g_AllianceLevelRanges[i].desiredPercent = static_cast<uint8>(
+            sConfigMgr->GetOption<uint32>((keyPrefix + ".Pct").c_str(), 11)
+        );
     }
 
     // Load Horde configuration.
     for (uint8 i = 0; i < g_NumRanges; ++i)
     {
         std::string idx = std::to_string(i + 1);
-        g_HordeLevelRanges[i].lower = static_cast<uint8>(sConfigMgr->GetOption<uint32>("BotLevelBrackets.Horde.Range" + idx + ".Lower", (i == 0 ? 1 : i * 10)));
-        g_HordeLevelRanges[i].upper = static_cast<uint8>(sConfigMgr->GetOption<uint32>("BotLevelBrackets.Horde.Range" + idx + ".Upper", (i < g_NumRanges - 1 ? i * 10 + 9 : g_RandomBotMaxLevel)));
-        g_HordeLevelRanges[i].desiredPercent = static_cast<uint8>(sConfigMgr->GetOption<uint32>("BotLevelBrackets.Horde.Range" + idx + ".Pct", 11));
+        std::string keyPrefix = "BotLevelBrackets.Horde.Range" + std::to_string(i + 1);
+        g_HordeLevelRanges[i].lower = static_cast<uint8>(
+            sConfigMgr->GetOption<uint32>((keyPrefix + ".Lower").c_str(), (i == 0 ? 1 : i * 10))
+        );
+        g_HordeLevelRanges[i].upper = static_cast<uint8>(
+            sConfigMgr->GetOption<uint32>((keyPrefix + ".Upper").c_str(), (i < g_NumRanges - 1 ? i * 10 + 9 : g_RandomBotMaxLevel))
+        );
+        g_HordeLevelRanges[i].desiredPercent = static_cast<uint8>(
+            sConfigMgr->GetOption<uint32>((keyPrefix + ".Pct").c_str(), 11)
+        );
     }
 
     // If SyncFactions is enabled, ensure bracket definitions match exactly for both factions.
